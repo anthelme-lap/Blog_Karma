@@ -23,6 +23,7 @@ class HomeController extends AbstractController
     #[Route('/article/detail/{id}', name: 'app_detail', methods:['GET'])]
     public function show(Article $article): Response
     {
+        // dd($article);
         if($article){
             return $this->render('home/show.html.twig',[
                 'article' => $article
