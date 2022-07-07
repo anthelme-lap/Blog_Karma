@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.12",
+        "easycorp/easyadmin-bundle": "^4.3",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.6",
         "sensio/framework-extra-bundle": "^6.1",
@@ -22,6 +23,7 @@
         "symfony/flex": "^2",
         "symfony/form": "6.1.*",
         "symfony/framework-bundle": "6.1.*",
+        "symfony/google-mailer": "6.1.*",
         "symfony/http-client": "6.1.*",
         "symfony/intl": "6.1.*",
         "symfony/mailer": "6.1.*",
@@ -41,7 +43,10 @@
         "symfony/validator": "6.1.*",
         "symfony/web-link": "6.1.*",
         "symfony/yaml": "6.1.*",
+        "symfonycasts/verify-email-bundle": "^1.10",
         "twig/extra-bundle": "^2.12|^3.0",
+        "twig/intl-extra": "^3.4",
+        "twig/string-extra": "^3.4",
         "twig/twig": "^2.12|^3.0"
     },
     "config": {

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails article | Karma{% endblock %}
+
+{% block body %}
+
+    {{ include ("partials/breadcrumbs.html.twig",{'name':'Détail article'}) }}
+    {% include "partials/show.html.twig" %}
+
+{% endblock %}

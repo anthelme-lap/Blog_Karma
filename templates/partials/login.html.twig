@@ -1,0 +1,65 @@
+<!--================Login Box Area =================-->
+	<section class="login_box_area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="login_box_img">
+						<img class="img-fluid" src="assetstyle/img/login.jpg" alt="">
+						<div class="hover">
+							<h4>Nouveau sur le site ?</h4>
+							<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
+							<a class="primary-btn" href="{{path('app_register')}}">Créer un compte</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="login_form_inner">
+						<h3>Log in to enter</h3>
+						<form class="row login_form" method="post" id="contactForm">
+                            {% if error %}
+							
+                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
+
+                            {% if app.user %}
+                                <div class="mb-3">
+                                   Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+                                </div>
+                            {% endif %}
+
+							<div class="col-md-12 form-group">
+                                {# <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus> #}
+								<input type="email" value="{{ last_username }}" class="form-control" id="email" name="email" placeholder="E-mail" onfocus="this.placeholder = ''" onblur="this.placeholder = 'E-mail'" autocomplete="email" required autofocus>
+							</div>
+							<div class="col-md-12 form-group">
+                            {# <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required> #}
+								<input type="password" class="form-control" id="inputPassword" name="password" placeholder="Mot de passe" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mot de passe'" autocomplete="current-password" required>
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+							</div>
+							<div class="col-md-12 form-group">
+								<div class="creat_account">
+									<input type="checkbox" id="f-option2" name="selector">
+									<label for="f-option2">Se souvenir de moi</label>
+                                     {#
+                                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                                        See https://symfony.com/doc/current/security/remember_me.html
+
+                                        <div class="checkbox mb-3">
+                                            <label>
+                                                <input type="checkbox" name="_remember_me"> Remember me
+                                            </label>
+                                        </div>
+                                    #}
+								</div>
+							</div>
+							<div class="col-md-12 form-group">
+								<button type="submit" value="submit" class="primary-btn">Connexion</button>
+								<a href="#">Mot de passe oublié ?</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Login Box Area =================-->
