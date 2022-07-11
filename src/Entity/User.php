@@ -38,26 +38,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    #[ORM\OneToMany(mappedBy: 'fkuser', targetEntity: Article::class)]
-    private $articles;
-
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Article::class)]
     private $articlesuser;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $photo;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $function;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $facebook;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $github;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $instagram;
 
     public function __construct()
     {
@@ -206,63 +188,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->firstname.' '.$this->name;
     }
 
-    public function getPhoto(): ?string
+    public function gravatar(): ?string
     {
-        return $this->photo;
+        return "https://www.gravatar.com/avatar/". md5(strtolower(trim( $this->getEmail()))). "/?s=150" ;
     }
 
-    public function setPhoto(string $photo): self
-    {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
-    public function getFunction(): ?string
-    {
-        return $this->function;
-    }
-
-    public function setFunction(string $function): self
-    {
-        $this->function = $function;
-
-        return $this;
-    }
-
-    public function getFacebook(): ?string
-    {
-        return $this->facebook;
-    }
-
-    public function setFacebook(?string $facebook): self
-    {
-        $this->facebook = $facebook;
-
-        return $this;
-    }
-
-    public function getGithub(): ?string
-    {
-        return $this->github;
-    }
-
-    public function setGithub(?string $github): self
-    {
-        $this->github = $github;
-
-        return $this;
-    }
-
-    public function getInstagram(): ?string
-    {
-        return $this->instagram;
-    }
-
-    public function setInstagram(?string $instagram): self
-    {
-        $this->instagram = $instagram;
-
-        return $this;
-    }
 }

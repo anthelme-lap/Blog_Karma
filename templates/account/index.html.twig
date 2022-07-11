@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compte | Karma{% endblock %}
+
+{% block body %}
+
+{{ include ("partials/breadcrumbs.html.twig", {'name':'Compte'})}}
+<div class="container">
+    <div class="row mt-5 mb-5 my-5 mx-5">
+        <div class="col-md-6 mx-auto shadow text-center">
+            <h1 class="my-5">Compte</h1>
+            <img src="{{app.user.gravatar}}" class="shadow rounded-circle">
+            <p class="mt-5 lead">{{app.user.email}}</p>
+            <h2 class="my-5">{{app.user.name}} {{app.user.firstname}}</h2>
+            <p class="mt-5 lead">
+                <a href="">Modifier compte</a> | <a href="">Modifier mot de passe</a>
+            </p>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
