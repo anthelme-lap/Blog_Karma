@@ -40,9 +40,17 @@
         
     </head>
     <body>
-
+        {% if app.user and app.user.isVerified == null %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{app.user.name}} </strong>, votre compte n'est pas activé. Renvoie le e-mail.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
         {% include "partials/header.html.twig" %}
-
+        
+        
         {% block body %}{% endblock %}
 
         {% include "partials/footer.html.twig" %}
