@@ -33,7 +33,7 @@
                         </div>
                         <div class="col-lg-9 col-md-9 blog_details">
                             <h2>{{article.title}}</h2>
-                            <p class="excert">
+                            <p class="excert text-justify">
                                 {{article.description | raw}}
                             </p>
                             
@@ -43,7 +43,7 @@
                     </div>
                 
                     <div class="comments-area">
-                        <h4>05 Comments</h4>
+                        <h4>05 Commentaires</h4>
                         <div class="comment-list">
                             <div class="single-comment justify-content-between d-flex">
                                 <div class="user justify-content-between d-flex">
@@ -140,6 +140,16 @@
                             </div>
                         </div>
                     </div>
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger alert-dismissible text-center fade show" role="alert">
+                            {{ message }} <a href="{{path('app_login')}} ">connexion </a>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
                     <div class="comment-form">
                         <h4>Laissez un commentaire</h4>
                         {{ form_start(form) }}

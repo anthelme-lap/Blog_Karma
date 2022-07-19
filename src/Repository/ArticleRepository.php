@@ -42,13 +42,12 @@ class ArticleRepository extends ServiceEntityRepository
 //    /**
 //     * @return Article[] Returns an array of Article objects
 //     */
-//    public function findByExampleField($value): array
+//    public function findByArt($value): array
 //    {
 //        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
+//            ->join('a.category','c')
+//            ->andWhere('a.id = :val')
 //            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
 //            ->getQuery()
 //            ->getResult()
 //        ;

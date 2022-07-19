@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégorie | Karma{% endblock %}
+
+{% block body %}
+    {{ include ("partials/breadcrumbs.html.twig", {'name':'Catégories produits'})}}
+    {% include "partials/_product_category.html.twig" %}
+{% endblock %}

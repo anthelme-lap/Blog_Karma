@@ -35,13 +35,8 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
-            $user->setPassword(
-            $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('password')->getData()
-                )
-            );
-
+            $user->setPassword($userPasswordHasher->hashPassword($user,$form->get('password')->getData()));
+            // $user->setImage('imageUser.jpg');
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -90,6 +85,35 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('app_home');
+    }
+
+    #[Route('/resend_email', name:'app_resend_email')]
+    public function resendEmail(): Response
+    {
+        // On vérifie si l'utilisateur est connecté
+        $user = $this->getUser();
+
+        if(!$user){
+            $this->addFlash('danger', 'Vous devez vous connecter avant d\'accéder à cette page');
+            return $this->redirectToRoute('app_login');
+        }
+
+        if($user->isVerified()){
+            $this->addFlash('warning', 'Votre compte est déjà activé');
+            return $this->redirectToRoute('app_home');
+        }
+
+        // generate a signed url and email it to the user
+        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+        (new TemplatedEmail())
+            ->from(new Address('aouekoffi88@gmail.com', 'Aoue Koffi'))
+            ->to($user->getEmail())
+            ->subject('Veuillez confirmer votre e-mail')
+            ->htmlTemplate('registration/confirmation_email.html.twig')
+        );
+        // do anything else you need here, like send an email
+        $this->addFlash('success', 'E-mail de vérification envoyé.');
+        return $this->redirectToRoute('app_home');
     }
 }

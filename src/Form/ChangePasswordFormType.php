@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -14,14 +15,38 @@ class ChangePasswordFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        if ($options['current_password_required']) {
+          $builder
+            ->add('currentPassword', PasswordType::class,[
+                    'label' => false,
+                    'attr' => [
+                        'class' => 'form-control',
+                        'placeholder' => 'ancien mot de passe'
+                    ],
+                    'constraints' => [
+                            new NotBlank([
+                                'message' => 'Entrer votre ancien mot de passe'
+                            ]),
+                            new UserPassword([
+                                'message' => 'Ancien mot de passe invalid.'
+                            ])
+                        ]
+                    ]
+                );
+        }
         $builder
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
-                    'attr' => ['autocomplete' => 'new-password'],
+                    'label' => false,
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                        'placeholder' => 'Mot de passe',
+                        'class' => 'form-control'
+                    ],
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Please enter a password',
+                            'message' => 'Entrer votre mot de passe',
                         ]),
                         new Length([
                             'min' => 6,
@@ -30,13 +55,17 @@ class ChangePasswordFormType extends AbstractType
                             'max' => 4096,
                         ]),
                     ],
-                    'label' => 'New password',
+                    // 'label' => 'New password',
                 ],
                 'second_options' => [
-                    'attr' => ['autocomplete' => 'new-password'],
-                    'label' => 'Repeat Password',
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                        'placeholder' => 'Confirmation',
+                        'class' => 'form-control'
+                    ],
+                    'label' => false,
                 ],
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'Entrez un mot de passe identique.',
                 // Instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
@@ -46,6 +75,8 @@ class ChangePasswordFormType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([]);
+        $resolver->setDefaults([
+            'current_password_required' => false
+        ]);
     }
 }

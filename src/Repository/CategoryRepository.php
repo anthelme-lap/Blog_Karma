@@ -42,13 +42,12 @@ class CategoryRepository extends ServiceEntityRepository
 //    /**
 //     * @return Category[] Returns an array of Category objects
 //     */
-//    public function findByExampleField($value): array
+//    public function findArticleByCategory($category): array
 //    {
 //        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
+//            ->join('c.article_id','a')
+//            ->where('a.id = :val')
+//            ->setParameter('val', $category)
 //            ->getQuery()
 //            ->getResult()
 //        ;
@@ -63,4 +62,17 @@ class CategoryRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+        public function findArticleByCategory($category): array
+        {
+            $db = $this->getEntityManager()->getConnection();
+
+            $sql = 'SELECT * FROM article 
+                    INNER JOIN category ON 
+                    article.category_id=category.id WHERE category.id= :category';
+
+            $stm = $db->prepare($sql);
+            $result = $stm->executeQuery(['category' => $category]);
+            return $result->fetchAllKeyValue();
+        }
 }

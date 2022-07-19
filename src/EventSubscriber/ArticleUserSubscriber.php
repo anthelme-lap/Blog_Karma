@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Entity\User;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
@@ -28,7 +29,7 @@ class ArticleUserSubscriber implements EventSubscriberInterface
     {
         $entity = $event->getEntityInstance();
 
-        if (!($entity instanceof Comment)) {
+        if (!($entity instanceof User)) {
             return;
         }
 

@@ -1,14 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}Changer mot de passe | Karma{% endblock %}
 
 {% block body %}
     {{ include ('partials/breadcrumbs.html.twig',{'name':'Reset your password'}) }}
 
-    <h1>Reset your password</h1>
-
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
-    {{ form_end(resetForm) }}
+    <div class="row mt-5">
+        <div class="shadow login_form_inner col-md-6 mb-5 mx-auto">
+            <h1 class="mt-5 mb-5 text-center">Changer mot de passe</h1>
+            {{ form_start(resetForm, {'attr' : {'class':'row login_form'}}) }}
+                
+                <div class="col-md-12 form-group">
+                    {{ form_row(resetForm.plainPassword) }}
+                </div>
+                <div class="col-md-12 form-group">
+                    <button type="submit" class="primary-btn">Soumettre</button>
+                </div>
+            {{ form_end(resetForm) }}
+        </div>
+    </div>
 {% endblock %}

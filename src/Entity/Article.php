@@ -28,16 +28,10 @@ class Article
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'articles')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $category;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'articlesuser')]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
-
-    #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class)]
-    private $comments;
 
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class)]
     private $fkcomment;
@@ -45,13 +39,19 @@ class Article
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $tag;
+
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'articles')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $category;
+
+
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
         $this->fkcomment = new ArrayCollection();
     }
 
-   
 
     public function getId(): ?int
     {
@@ -106,17 +106,6 @@ class Article
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {
@@ -134,36 +123,6 @@ class Article
     public function __toString()
     {
         return $this->title;
-    }
-
-    /**
-     * @return Collection<int, Comment>
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comment $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getArticle() === $this) {
-                $comment->setArticle(null);
-            }
-        }
-
-        return $this;
     }
 
     /**
@@ -207,4 +166,30 @@ class Article
 
         return $this;
     }
+
+    public function getTag(): ?string
+    {
+        return $this->tag;
+    }
+
+    public function setTag(?string $tag): self
+    {
+        $this->tag = $tag;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+
 }

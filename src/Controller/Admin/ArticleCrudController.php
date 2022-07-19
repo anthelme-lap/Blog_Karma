@@ -32,12 +32,15 @@ class ArticleCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('title')->setLabel('Titre'),
-            SlugField::new('slug')->setTargetFieldName('title'),
-            AssociationField::new('category')->setLabel('Catégorie'),
-            ImageField::new('image')->setBasePath('assetstyle/img')
+            TextField::new('title','Titre'),
+            SlugField::new('slug')->setTargetFieldName('title')->hideOnIndex(),
+            TextField::new('tag')->hideOnIndex(),
+            AssociationField::new('category', 'Catégorie'),
+            TextEditorField::new('description','Description de l\'article'),
+            ImageField::new('image','Image de l\'article')
+                                    ->setBasePath('assetstyle/img')
                                     ->setUploadDir('public/assetstyle/img'),
-            TextEditorField::new('description'),
+            
         ];
 
     }

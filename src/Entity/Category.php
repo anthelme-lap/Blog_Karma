@@ -27,16 +27,18 @@ class Category
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Article::class)]
-    private $articles;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $active;
+
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Article::class)]
+    private $articles;
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -91,6 +93,23 @@ class Category
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(?bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Article>
      */
@@ -117,23 +136,6 @@ class Category
                 $article->setCategory(null);
             }
         }
-
-        return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->name;
-    }
-
-    public function isActive(): ?bool
-    {
-        return $this->active;
-    }
-
-    public function setActive(?bool $active): self
-    {
-        $this->active = $active;
 
         return $this;
     }

@@ -1,4 +1,4 @@
-   	  <!-- Start Banner Area -->
+   	  {# <!-- Start Banner Area -->
     <section class="banner-area organic-breadcrumb">
         <div class="container">
             <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
@@ -12,28 +12,81 @@
             </div>
         </div>
     </section>
-    <!-- End Banner Area -->
+    <!-- End Banner Area --> #}
+
+    <!-- start banner Area -->
+	<section class="banner-area">
+		<div class="container">
+			<div class="row fullscreen align-items-center justify-content-start">
+				<div class="col-lg-12">
+					<div class="active-banner-slider owl-carousel">
+						<!-- single-slide -->
+						<div class="row single-slide align-items-center d-flex">
+							<div class="col-lg-5 col-md-6">
+								<div class="banner-content">
+									<h1>Nike New <br>Collection!</h1>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+									<div class="add-bag d-flex align-items-center">
+										<a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
+										<span class="add-text text-uppercase">Lire</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-7">
+								<div class="banner-img">
+									<img class="img-fluid" src="../../assetstyle/img/banner/banner-img.png" alt="">
+								</div>
+							</div>
+						</div>
+						<!-- single-slide -->
+						<div class="row single-slide">
+							<div class="col-lg-5">
+								<div class="banner-content">
+									<h1>Nike New <br>Collection!</h1>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+									<div class="add-bag d-flex align-items-center">
+										<a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
+										<span class="add-text text-uppercase">Lire</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-7">
+								<div class="banner-img">
+									<img class="img-fluid" src="../../assetstyle/img/banner/banner-img.png" alt="k">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End banner Area -->
 
     <!--================Blog Categorie Area =================-->
     <section class="blog_categorie_area">
         <div class="container">
             <div class="row">
-            {% for items in category %}
-                <div class="col-lg-4">
-                    <div class="categories_post">
-                        <img src="assetstyle/img/{{items.image}}" width="450px" height="200px" alt="post">
-                        <div class="categories_details">
-                            <div class="categories_text">
-                                <a href="blog-details.html">
-                                    <h5>{{items.name}}</h5>
-                                </a>
-                                <div class="border_line"></div>
-                                <p>{{items.description | raw}}</p>
+            {% if category %}
+                {% for items in categoryActive %}
+                    <div class="col-lg-4">
+                        <div class="categories_post">
+                            <img src="assetstyle/img/{{items.image}}" width="450px" height="200px" alt="post">
+                            <div class="categories_details">
+                                <div class="categories_text">
+                                    <a href="{{path('app_category',{'id':items.id})}}">
+                                        <h5>{{items.name}}</h5>
+                                    </a>
+                                    <div class="border_line"></div>
+                                    <p>{{items.description | raw}}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            {% endif %}
             </div>
         </div>
     </section>
@@ -99,7 +152,7 @@
                     <div class="blog_right_sidebar">
                         <aside class="single_sidebar_widget search_widget">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search Posts" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Rechercher des articles'">
+                                <input type="text" class="form-control" placeholder="Rechercher un article" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Rechercher des articles'">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default" type="button"><i class="lnr lnr-magnifier"></i></button>
                                 </span>
@@ -122,21 +175,23 @@
                             <div class="br"></div>
                         </aside>
                         <aside class="single_sidebar_widget ads_widget">
-                            <a href="#"><img class="img-fluid" src="assetstyle/img/blog/add.jpg" alt=""></a>
+                            <a href="#"><img class="img-fluid" src="../../assetstyle/img/blog/add.jpg" alt=""></a>
                             <div class="br"></div>
                         </aside>
                     
                         <aside class="single_sidebar_widget post_category_widget">
                             <h4 class="widget_title">Catégories des articles</h4>
                             <ul class="list cat-list">
-                            {% for item in category %}
-                                <li>
-                                    <a href="#" class="d-flex justify-content-between">
-                                        <p>{{item.name}}</p>
-                                        <p>37</p>
-                                    </a>
-                                </li>
-                            {% endfor %}
+                            {% if category %}
+                                {% for item in category %}
+                                    <li>
+                                        <a href="{{path('app_category',{'id':item.id})}} " class="d-flex justify-content-between">
+                                            <p>{{item.name}}</p>
+                                            <p>37</p>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
                             </ul>
                             <div class="br"></div>
                         </aside>

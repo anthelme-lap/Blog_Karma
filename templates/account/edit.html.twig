@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier son profil | Karma{% endblock %}
+
+{% block body %}
+{{ include ("partials/breadcrumbs.html.twig",{'name':'Modifier son profil'}) }}
+<!--================Login Box Area =================-->
+	<section class="login_box_area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 mx-auto">
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+					<div class="login_form_inner">
+						<h3>Modifier profil</h3>
+                        {{ form_start(formEditAccount, {'attr' : {'class':'row login_form'}}) }}
+							<div class="col-md-12 form-group">
+                                {{form_row(formEditAccount.name)}}
+							</div>
+							<div class="col-md-12 form-group">
+                                {{form_row(formEditAccount.firstname)}}
+							</div>
+                            <div class="col-md-12 form-group">
+                                {{form_row(formEditAccount.email)}}
+							</div>
+                            <div class="col-md-12 form-group">
+                                {{form_row(formEditAccount.imageFile)}}
+							</div>
+							<div class="col-md-12 form-group">
+								<button type="submit" class="primary-btn">Soumettre</button>
+							</div>
+                            {{ form_end(formEditAccount) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+

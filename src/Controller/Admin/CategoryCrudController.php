@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class CategoryCrudController extends AbstractCrudController
@@ -25,10 +26,12 @@ class CategoryCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('name')->setLabel('Nom catégorie'),
             BooleanField::new('active')->setLabel('Active'),
+            // AssociationField::new('articles','Article'),
             TextEditorField::new('description')->setLabel('Description'),
             ImageField::new('image')
                     ->setBasePath('assetstyle/img')
-                    ->setUploadDir('public/assetstyle/img'),
+                    ->setUploadDir('public/assetstyle/img')
+                    ->setRequired(false),
         ];
     }
 

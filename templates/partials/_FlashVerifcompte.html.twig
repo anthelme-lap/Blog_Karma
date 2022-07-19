@@ -1,0 +1,8 @@
+{% if app.user and app.user.isVerified == null %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{app.user.name}} </strong>, votre compte n'est pas activé. <a href="{{path('app_resend_email')}} ">Renvoyer le e-mail de confirmation.</a> 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endif %}
