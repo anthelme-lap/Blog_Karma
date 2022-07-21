@@ -47,26 +47,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Article::class)]
-    private $articlesuser;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
-    private $comments;
-
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $image;
-
 
     #[Vich\UploadableField(mapping: "user_images", fileNameProperty: "image")]
     private ?File $imageFile = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
+    private $comments;
+
     public function __construct()
     {
-        $this->articles = new ArrayCollection();
-        $this->articlesuser = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
-
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -173,35 +167,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
         return $this;
     }
 
-    /**
-     * @return Collection<int, Article>
-     */
-    public function getArticlesuser(): Collection
-    {
-        return $this->articlesuser;
-    }
-
-    public function addArticlesuser(Article $articlesuser): self
-    {
-        if (!$this->articlesuser->contains($articlesuser)) {
-            $this->articlesuser[] = $articlesuser;
-            $articlesuser->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticlesuser(Article $articlesuser): self
-    {
-        if ($this->articlesuser->removeElement($articlesuser)) {
-            // set the owning side to null (unless already changed)
-            if ($articlesuser->getUser() === $this) {
-                $articlesuser->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function __toString()
     {
@@ -213,36 +178,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
         return "https://www.gravatar.com/avatar/". md5(strtolower(trim( $this->getEmail()))). "/?s=150" ;
     }
 
-    /**
-     * @return Collection<int, Comment>
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comment $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getUser() === $this) {
-                $comment->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
+    
     public function getImage(): ?string
     {
         return $this->image;
@@ -297,6 +233,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
 }

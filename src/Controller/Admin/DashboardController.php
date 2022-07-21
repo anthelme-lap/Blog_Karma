@@ -60,8 +60,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Ajouter', 'fas fa-plus', About::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Voir les articles', 'fas fa-eye', About::class)->setAction(Crud::PAGE_INDEX)
         ]);
-        yield MenuItem::subMenu('Commentaire', 'fa fa-comments')->setSubItems([
-            MenuItem::linkToCrud('Voir les articles', 'fas fa-eye', Comment::class)->setAction(Crud::PAGE_INDEX)
-        ]);
+        // yield MenuItem::subMenu('Commentaire', 'fa fa-comments')->setSubItems([
+        //     MenuItem::linkToCrud('Voir les articles', 'fas fa-eye', Comment::class)->setAction(Crud::PAGE_INDEX)
+        // ]);
     }
 }

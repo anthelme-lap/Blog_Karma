@@ -65,6 +65,17 @@
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
             <script src="../../assetstyle/js/gmaps.min.js"></script>
             <script src="../../assetstyle/js/main.js"></script>
+
+            {# script commentaire imbriqué #}
+            <script>
+                window.onload = () => {
+                    document.querySelectorAll("[data-reply]").forEach(element =>{
+                        element.addEventListener("click", function(){
+                            document.querySelector("#comment_form_commentParent").value = this.dataset.id;
+                        })
+                    })
+                }
+            </script>
         {% endblock %}
     </body>
 </html>

@@ -113,11 +113,11 @@
                                 <div class="blog_post">
                                     <img src="assetstyle/img/{{item.image}}" alt="">
                                     <div class="blog_details">
-                                        <a href="{{path('app_detail',{'id':item.id})}}">
+                                        <a href="{{path('app_detail',{'slug':item.slug})}}">
                                             <h2>{{item.title}}</h2>
                                         </a>
                                         <p>{{item.description|u.truncate(222,'...') |raw}}</p>
-                                        <a href="{{path('app_detail',{'id':item.id})}}" class="white_bg_btn">Lire plus</a>
+                                        <a href="{{path('app_detail',{'slug':item.slug})}}" class="white_bg_btn">Lire plus</a>
                                     </div>
                                 </div>
                             </div>
@@ -125,25 +125,7 @@
                     {% endfor %}
                         <nav class="blog-pagination justify-content-center d-flex">
                             <ul class="pagination">
-                                <li class="page-item">
-                                    <a href="#" class="page-link" aria-label="Previous">
-                                        <span aria-hidden="true">
-                                            <span class="lnr lnr-chevron-left"></span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a href="#" class="page-link">01</a></li>
-                                <li class="page-item active"><a href="#" class="page-link">02</a></li>
-                                <li class="page-item"><a href="#" class="page-link">03</a></li>
-                                <li class="page-item"><a href="#" class="page-link">04</a></li>
-                                <li class="page-item"><a href="#" class="page-link">09</a></li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link" aria-label="Next">
-                                        <span aria-hidden="true">
-                                            <span class="lnr lnr-chevron-right"></span>
-                                        </span>
-                                    </a>
-                                </li>
+                                <li class="page-item">{{knp_pagination_render(article)}}</a></li>
                             </ul>
                         </nav>
                     </div>

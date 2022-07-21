@@ -4,9 +4,10 @@ namespace App\Form;
 
 use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class CommentFormType extends AbstractType
 {
@@ -15,8 +16,11 @@ class CommentFormType extends AbstractType
         $builder
             ->add('message',TextareaType::class,[
                 'label' => false,
-                'attr' => ['class' => 'form-control mb-10', 'placeholder' => 'Ecrivez votre message']
-                ])
+                'attr' => ['class' => 'form-control', 'placeholder' => 'Message']
+            ])
+            ->add('commentParent', HiddenType::class,[
+                'mapped' => false
+            ])
         ;
     }
 

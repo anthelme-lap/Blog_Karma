@@ -6,3 +6,17 @@
     {{ include ("partials/breadcrumbs.html.twig",{'name':'Détail article'}) }}
     {% include "partials/show.html.twig" %}
 {% endblock %}
+
+{# {% block javascript %}
+    <script>
+        window.onload = () =>{
+            document.querySelector(['data-reply']).forEach(element =>{
+                element.addEventListener("click", function(){
+                    console.log(this);
+                })
+            })
+        }
+        
+    </script>
+    
+{% endblock %} #}

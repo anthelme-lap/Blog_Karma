@@ -15,45 +15,44 @@ class Comment
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'text')]
-    private $message;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $user;
+
+    #[ORM\ManyToOne(targetEntity: Article::class, inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $article;
+
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments')]
+    private $commentParent;
+
+    #[ORM\OneToMany(mappedBy: 'commentParent', targetEntity: self::class)]
+    private $comments;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 
-    #[ORM\ManyToOne(targetEntity: Article::class, inversedBy: 'fkcomment')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $article;
+    #[ORM\Column(type: 'text')]
+    private $message;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $user;
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getMessage(): ?string
+    public function getUser(): ?User
     {
-        return $this->message;
+        return $this->user;
     }
 
-    public function setMessage(string $message): self
+    public function setUser(?User $user): self
     {
-        $this->message = $message;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
+        $this->user = $user;
 
         return $this;
     }
@@ -70,16 +69,69 @@ class Comment
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getCommentParent(): ?self
     {
-        return $this->user;
+        return $this->commentParent;
     }
 
-    public function setUser(?User $user): self
+    public function setCommentParent(?self $commentParent): self
     {
-        $this->user = $user;
+        $this->commentParent = $commentParent;
 
         return $this;
     }
 
+    /**
+     * @return Collection<int, self>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(self $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setCommentParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(self $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getCommentParent() === $this) {
+                $comment->setCommentParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    public function setMessage(string $message): self
+    {
+        $this->message = $message;
+
+        return $this;
+    }
 }

@@ -7,150 +7,72 @@
                     {% if article %}
                         <div class="col-lg-12">
                             <div class="feature-img">
-                                <img class="img-fluid" src="../../assetstyle/img/{{article.image}}" width="900px" alt="article">
+                                <img class="img-fluid" src="../../assetstyle/img/{{article.image}}" width="1100px" alt="article">
                             </div>
                         </div>
-                        <div class="col-lg-2  col-md-3">
-                            <div class="blog_info text-right">
-                                <div class="post_tag">
-                                    <a href="#">Food,</a>
-                                    <a class="active" href="#">Technology,</a>
-                                    <a href="#">Politics,</a>
-                                    <a href="#">Lifestyle</a>
-                                </div>
-                                <ul class="blog_meta list">
-                                    <li><a href="#">{{article.user}}<i class="lnr lnr-user"></i></a></li>
-                                    <li><a href="#">{{article.createdAt | date()}}<i class="lnr lnr-calendar-full"></i></a></li>
-                                    <li><a href="#">06 Comments<i class="lnr lnr-bubble"></i></a></li>
-                                </ul>
-                                <ul class="social-links">
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-github"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-md-9 blog_details">
+                        <div class="col-lg-12 col-md-12 blog_details">
                             <h2>{{article.title}}</h2>
                             <p class="excert text-justify">
                                 {{article.description | raw}}
                             </p>
-                            
                         </div>
                         
                         {% endif %}
                     </div>
                 
                     <div class="comments-area">
-                        <h4>05 Commentaires</h4>
-                        <div class="comment-list">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="../../assetstyle/img/blog/c1.jpg" alt="">
-                                    </div>
-                                    <div class="desc">
-                                        <h5><a href="#">Emilly Blunt</a></h5>
-                                        <p class="date">December 4, 2018 at 3:12 pm </p>
-                                        <p class="comment">
-                                            Never say goodbye till the end comes!
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="reply-btn">
-                                    <a href="" class="btn-reply text-uppercase">reply</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-list left-padding">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="img/blog/c2.jpg" alt="">
-                                    </div>
-                                    <div class="desc">
-                                        <h5><a href="#">Elsie Cunningham</a></h5>
-                                        <p class="date">December 4, 2018 at 3:12 pm </p>
-                                        <p class="comment">
-                                            Never say goodbye till the end comes!
-                                        </p>
+                        <h4> Commentaires</h4>
+                        {% for comment in article.comments %}
+                            {% if comment.commentParent == null %}
+                                <div class="comment-list">
+                                    <div class="single-comment justify-content-between d-flex">
+                                        <div class="user justify-content-between d-flex">
+                                            <div class="thumb">
+                                                <img src="../../assetstyle/img/banner/{{comment.user.image}}" alt="">
+                                            </div>
+                                            <div class="desc">
+                                                <h5><a href="#">{{comment.user}}</a></h5>
+                                                <p class="date">{{comment.createdAt|date("d/m/y H:i")}} </p>
+                                                <p class="comment">
+                                                    {{comment.message}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="reply-btn">
+                                            <a href="#id-comment" data-reply data-id="{{comment.id}}" class="btn-reply text-uppercase">repondre</a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="reply-btn">
-                                    <a href="" class="btn-reply text-uppercase">reply</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-list left-padding">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="../../assetstyle/img/blog/c3.jpg" alt="">
+
+                                {# Reponse aux commentaires #}
+                                {% for reponse in comment.comments %}
+                                    <div class="comment-list left-padding">
+                                        <div class="single-comment justify-content-between d-flex">
+                                            <div class="user justify-content-between d-flex">
+                                                <div class="thumb">
+                                                    <img src="../../assetstyle/img/banner/c2.jpg" alt="">
+                                                </div>
+                                                <div class="desc">
+                                                    <h5><a href="#">{{reponse.user}}</a></h5>
+                                                    <p class="date">Réponse publiée le{{reponse.createdAt|date("d/m/y H:i")}} </p>
+                                                    <p class="comment">
+                                                        {{reponse.message}}!
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="desc">
-                                        <h5><a href="#">Annie Stephens</a></h5>
-                                        <p class="date">December 4, 2018 at 3:12 pm </p>
-                                        <p class="comment">
-                                            Never say goodbye till the end comes!
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="reply-btn">
-                                    <a href="" class="btn-reply text-uppercase">reply</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-list">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="../../assetstyle/img/blog/c4.jpg" alt="">
-                                    </div>
-                                    <div class="desc">
-                                        <h5><a href="#">Maria Luna</a></h5>
-                                        <p class="date">December 4, 2018 at 3:12 pm </p>
-                                        <p class="comment">
-                                            Never say goodbye till the end comes!
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="reply-btn">
-                                    <a href="" class="btn-reply text-uppercase">reply</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-list">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="../../assetstyle/img/blog/c5.jpg" alt="">
-                                    </div>
-                                    <div class="desc">
-                                        <h5><a href="#">Ina Hayes</a></h5>
-                                        <p class="date">December 4, 2018 at 3:12 pm </p>
-                                        <p class="comment">
-                                            Never say goodbye till the end comes!
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="reply-btn">
-                                    <a href="" class="btn-reply text-uppercase">reply</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% for label, messages in app.flashes %}
-                        {% for message in messages %}
-                            <div class="alert alert-danger alert-dismissible text-center fade show" role="alert">
-                            {{ message }} <a href="{{path('app_login')}} ">connexion </a>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
+                                {% endfor %}
+                            {% endif %}    
                         {% endfor %}
-                    {% endfor %}
-                    <div class="comment-form">
+                        
+                    </div>
+                    <nav class="blog-pagination justify-content-center d-flex">
+                        <ul class="pagination">
+                            <li class="page-item">{{knp_pagination_render(comments)}}</a></li>
+                        </ul>
+                    </nav>
+                    <div class="comment-form" id="id-comment">
                         <h4>Laissez un commentaire</h4>
                         {{ form_start(form) }}
                             <div class="form-group">

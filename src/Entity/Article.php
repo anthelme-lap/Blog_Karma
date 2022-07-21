@@ -28,13 +28,9 @@ class Article
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 
-
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'articlesuser')]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
-
-    #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class)]
-    private $fkcomment;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
@@ -46,12 +42,13 @@ class Article
     #[ORM\JoinColumn(nullable: false)]
     private $category;
 
+    #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class)]
+    private $comments;
 
     public function __construct()
     {
-        $this->fkcomment = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -106,7 +103,6 @@ class Article
         return $this;
     }
 
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -123,36 +119,6 @@ class Article
     public function __toString()
     {
         return $this->title;
-    }
-
-    /**
-     * @return Collection<int, Comment>
-     */
-    public function getFkcomment(): Collection
-    {
-        return $this->fkcomment;
-    }
-
-    public function addFkcomment(Comment $fkcomment): self
-    {
-        if (!$this->fkcomment->contains($fkcomment)) {
-            $this->fkcomment[] = $fkcomment;
-            $fkcomment->setArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFkcomment(Comment $fkcomment): self
-    {
-        if ($this->fkcomment->removeElement($fkcomment)) {
-            // set the owning side to null (unless already changed)
-            if ($fkcomment->getArticle() === $this) {
-                $fkcomment->setArticle(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getSlug(): ?string
@@ -191,5 +157,34 @@ class Article
         return $this;
     }
 
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getArticle() === $this) {
+                $comment->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
 
 }
